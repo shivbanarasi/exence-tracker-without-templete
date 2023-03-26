@@ -82,12 +82,14 @@ h1{
             <th style="text-align: center;">Discription</th>
             <th style="text-align: center;">Category</th>
             <th style="text-align: center;">Amount in Rs.</th>
+            <th style="text-align: center;">action</th>
           </tr>
           <% for(let p of res) {%>
           <tr>
             <td style="text-align: center;"><%=p.discription%></td>
           <td style="text-align: center;"><%=p.category%></td>
           <td style="text-align: center;"><%=p.amount%></td>
+          <td style="text-align: center;"><a href="/deletedata/<%=p.id%>" border="1px solid black" style="color:white; border:1px solid black; text-decoration: none; border-radius: 5px; background-color:red;">delete</a></td>
           </tr>
           <%}%>
           <tr>

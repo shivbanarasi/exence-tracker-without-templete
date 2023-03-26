@@ -28,6 +28,19 @@ route.get("/",(req,res)=>{
 
 })
 
+route.get("/deletedata/:id",(req,res)=>{
+    var del=req.params.id;
+    console.log(del);
+    db.query(`delete from expence where id="${del}"`,(err)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect('/');
+        }
+    })
+    
+})
+
 route.get('/signup',(req,res)=>{
     res.render('signup',{
         title:'sign up',
