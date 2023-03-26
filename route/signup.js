@@ -3,11 +3,29 @@ const bcrypt=require('bcrypt');
 const route=express.Router();
 const db=require('../mysql/connn')
 
-route.get('/',(req,res)=>{
+// route.get('/',(req,res)=>{
     
-    res.render('home',{
-        title: 'home'
+//     res.render('home',{
+//         title: 'home'
+//     })
+// })
+
+route.get("/",(req,res)=>{
+    db.query("SELECT * FROM expence ",(err,result)=>{    
+        //const t=result.tracker;
+        console.log(result);
+        let tot=0;
+        for(let i of result){
+           tot+= i.amount;
+        }
+        console.log(tot)
+        res.render('home',{
+            res:result,
+            total:tot ,
+            title:'home'   
+        })
     })
+
 })
 
 route.get('/signup',(req,res)=>{
@@ -114,7 +132,26 @@ route.post('/signup',(req,res)=>{
 }
 })
 })
-            
+
+
+
+
+route.post("/addexp",(req,res)=>{
+    
+    const discription=req.body.discription
+    const category=req.body.category
+    const amount=req.body.amount
+    console.log(discription,category,amount)
+ db.query(`insert into expence(discription,category,amount) 
+ values('${discription}','${category}',${amount})`,(err,result)=>{
+     if(err){
+         console.log(err)
+     }       
+ } )
+ res.redirect('/')
+ 
+})
+
                    
 
 
