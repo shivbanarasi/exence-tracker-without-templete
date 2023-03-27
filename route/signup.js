@@ -47,15 +47,15 @@ const total=(id)=>{
 }
 
 
-route.get("/deletedata/:id",(req,res)=>{
+route.get("/deletedata/:id/:r",(req,res)=>{
     var del=req.params.id;
+    const r=req.params.r
     console.log(del);
     db.query(`delete from expence where id="${del}"`,(err)=>{
         if(err){
             console.log(err);
         }else{
-            db.query(`select user from expence where id="${del}"`,(err,r)=>{
-                console.log(r);
+            
                 db.query(`SELECT * FROM expence where user="${r}"` ,(err,out)=>{
                 let tot=0;
 for(let i of out){
@@ -68,11 +68,11 @@ for(let i of out){
                     res:out
                 })
             })
-           })
+           }
             
            
-        }
-    })
+        })
+    
     
 })
 

@@ -71,7 +71,7 @@ h1{
             <option value="cloth">cloths</option>
         </select>
 
-        <input type="text" name="email" value="<%=data%>" >
+        <input type="hidden" name="email" value="<%=data%>" >
 
         <button type="submit">add expence</button>
     </form>
@@ -91,7 +91,7 @@ h1{
             <td style="text-align: center;"><%=p.discription%></td>
           <td style="text-align: center;"><%=p.category%></td>
           <td style="text-align: center;"><%=p.amount%></td>
-          <td style="text-align: center;"><a href="/deletedata/<%=p.id%>" border="1px solid black" style="color:white; border:1px solid black; text-decoration: none; border-radius: 5px; background-color:red;">delete</a></td>
+          <td style="text-align: center;"><a href="/deletedata/<%=p.id%>/<%=data%>" border="1px solid black" style="color:white; border:1px solid black; text-decoration: none; border-radius: 5px; background-color:red;">delete</a></td>
           </tr>
           <%}%>
           <tr>
