@@ -3,30 +3,49 @@ const bcrypt=require('bcrypt');
 const route=express.Router();
 const db=require('../mysql/connn')
 
-// route.get('/',(req,res)=>{
+route.get('/',(req,res)=>{
     
-//     res.render('home',{
-//         title: 'home'
-//     })
+    res.render('front',{
+        title: 'home'
+    })
+})
+
+// route.get("/login/:user",(req,res)=>{
+//     const id=req.params.user;
+//     db.query(`SELECT * FROM expence where user="${id}"` ,(err,result)=>{
+//         let tot=0;
+//         for(let i of result){
+//            tot+= i.amount;
+//         }
+//         res.render('home',{
+//             title:'expence',
+//             res:result,
+//             total:tot
+//         })
+//      })
+//   // res.send('this is home page');
 // })
 
-route.get("/",(req,res)=>{
-    db.query("SELECT * FROM expence ",(err,result)=>{    
-        //const t=result.tracker;
-        console.log(result);
+// const userdetail=(id)=>{
+//     db.query(`SELECT * FROM user where id="${id}"` ,(err,result)=>{    
+//     //const t=result.tracker;
+//     console.log('res='+result);
+//     return result;
+   
+// }) 
+// };
+
+const total=(id)=>{
+    db.query(`select * from user where id="${id}"`,(err,result)=>{
         let tot=0;
         for(let i of result){
            tot+= i.amount;
         }
         console.log(tot)
-        res.render('home',{
-            res:result,
-            total:tot ,
-            title:'home'   
-        })
+        return tot;
     })
+}
 
-})
 
 route.get("/deletedata/:id",(req,res)=>{
     var del=req.params.id;
@@ -35,7 +54,23 @@ route.get("/deletedata/:id",(req,res)=>{
         if(err){
             console.log(err);
         }else{
-            res.redirect('/');
+            db.query(`select user from expence where id="${del}"`,(err,r)=>{
+                console.log(r);
+                db.query(`SELECT * FROM expence where user="${r}"` ,(err,out)=>{
+                let tot=0;
+for(let i of out){
+   tot+= i.amount;
+}
+                res.render('home',{
+                    title:'home page',
+                    data:r,
+                    total:tot,
+                    res:out
+                })
+            })
+           })
+            
+           
         }
     })
     
@@ -77,7 +112,19 @@ route.post('/login',async(req,res)=>{
                 console.log(pass);
                 bcrypt.compare(password, pass, function(err, result) {
                   if(result){
-                    res.redirect('/');
+                    db.query(`SELECT * FROM expence where user="${email}"` ,(err,out)=>{
+                        let tot=0;
+        for(let i of out){
+           tot+= i.amount;
+        }
+                        res.render('home',{
+                            title:'home page',
+                            data:email,
+                            total:tot,
+                            res:out
+                        })
+                    })
+                   
                     console.log('password matched')
                   }
                   else{
@@ -134,7 +181,7 @@ route.post('/signup',(req,res)=>{
                 console.log(err)
             }       
         } )
-        res.redirect('/')
+        res.redirect(`/login`)
     })    
 }else{
     res.render('signup',{
@@ -154,14 +201,26 @@ route.post("/addexp",(req,res)=>{
     const discription=req.body.discription
     const category=req.body.category
     const amount=req.body.amount
+    const user=req.body.email
     console.log(discription,category,amount)
- db.query(`insert into expence(discription,category,amount) 
- values('${discription}','${category}',${amount})`,(err,result)=>{
+ db.query(`insert into expence(discription,category,amount,user) 
+ values('${discription}','${category}',${amount},'${user}')`,(err,result)=>{
      if(err){
          console.log(err)
      }       
  } )
- res.redirect('/')
+ db.query(`SELECT * FROM expence where user="${user}"` ,(err,out)=>{
+    let tot=0;
+        for(let i of out){
+           tot+= i.amount;
+        }
+    res.render('home',{
+        title:'home page',
+        data:user,
+        total:tot,
+        res:out
+    })
+})
  
 })
 
