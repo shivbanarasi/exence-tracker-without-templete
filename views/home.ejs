@@ -9,6 +9,9 @@
     <style>
         body{
             background-color: aqua;
+            background-image: url("https://thumbs.dreamstime.com/b/business-expenditure-abstract-stationery-money-desk-43268364.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
         }
         table {
   font-family: arial, sans-serif;
@@ -17,16 +20,18 @@
 }
 
 td, th {
-  border: 1px solid #dddddd;
+  border: 1px solid wheat;
   text-align: left;
   padding: 8px;
+  color: white;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #0009;
+  color: white;
 }
 .exp{
-    background-color:rgb(191, 133, 245);
+    background-color:#9539;
     width:70%;
     margin: 100px 300px 100px 200px;
 }
@@ -35,7 +40,7 @@ tr:nth-child(even) {
     margin:20px 5px 20px 25px;
 }
 select{
-    padding:1% 83% 1% 0;
+    padding:1% 64.5% 1% 0;
     margin:20px 5px 20px 25px;
 }
 button{
@@ -64,6 +69,7 @@ h1{
         <input type="text" name="discription" placeholder="discription of expence...">
 
         <select name="category" >
+            <option >---select expence category---</option>
             <option value="fuel">fuel</option>
             <option value="food">food</option>
             <option value="salary">salary</option>
@@ -76,7 +82,9 @@ h1{
         <button type="submit">add expence</button>
     </form>
 </div>
-
+<div class="exp">
+    <h2 style="text-align: center; background-color: #0009; color: white; border: black solid ; padding: 5px;"><%=nam%> your expences</h2>
+</div>
 <div class="exp">
     <h1>    view your expences   </h1>
     <table>
@@ -91,7 +99,7 @@ h1{
             <td style="text-align: center;"><%=p.discription%></td>
           <td style="text-align: center;"><%=p.category%></td>
           <td style="text-align: center;"><%=p.amount%></td>
-          <td style="text-align: center;"><a href="/deletedata/<%=p.id%>/<%=data%>" border="1px solid black" style="color:white; border:1px solid black; text-decoration: none; border-radius: 5px; background-color:red;">delete</a></td>
+          <td style="text-align: center;"><a href="/deletedata/<%=p.id%>/<%=data%>" border="1px solid black" style="color:white; border:1px solid black; text-decoration: none; border-radius: 5px; background-color:red; padding: 5px;">delete</a></td>
           </tr>
           <%}%>
           <tr>
@@ -101,8 +109,9 @@ h1{
           </tr>
     </table>
 </div>
-<h2 style="text-align: center; margin-bottom: 30px;"><a href="/login ">logout</a>
-</h1>
+<h2 style="text-align: center; margin-bottom: 30px;">
+    <a style="text-decoration: none; border: black solid; background-color: #9958;border-radius: 10px; padding: 5px; " href="/login ">logout</a>
+</h2>
 
 </body>
 </html>

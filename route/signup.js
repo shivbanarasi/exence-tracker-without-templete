@@ -112,7 +112,9 @@ route.post('/login',async(req,res)=>{
                 console.log(pass);
                 bcrypt.compare(password, pass, function(err, result) {
                   if(result){
-                    db.query(`SELECT * FROM expence where user="${email}"` ,(err,out)=>{
+                    db.query(`select * from user where email="${email}"`,(err,naam)=>{
+                        console.log("naam="+naam.name)
+                        db.query(`SELECT * FROM expence where user="${email}"` ,(err,out)=>{
                         let tot=0;
         for(let i of out){
            tot+= i.amount;
@@ -121,11 +123,13 @@ route.post('/login',async(req,res)=>{
                             title:'home page',
                             data:email,
                             total:tot,
-                            res:out
+                            res:out,
+                            nam:naam[0].name
                         })
                     })
                    
-                    console.log('password matched')
+                    console.log('password matched')})
+                    
                   }
                   else{
                     res.render('login',{
@@ -209,18 +213,23 @@ route.post("/addexp",(req,res)=>{
          console.log(err)
      }       
  } )
- db.query(`SELECT * FROM expence where user="${user}"` ,(err,out)=>{
-    let tot=0;
-        for(let i of out){
-           tot+= i.amount;
-        }
-    res.render('home',{
-        title:'home page',
-        data:user,
-        total:tot,
-        res:out
+ db.query(`select * from user where email = '${user}'`,(err,naam)=>{
+    
+    db.query(`SELECT * FROM expence where user="${user}"` ,(err,out)=>{
+        let tot=0;
+            for(let i of out){
+               tot+= i.amount;
+            }
+        res.render('home',{
+            title:'home page',
+            data:user,
+            total:tot,
+            res:out,
+            nam:naam[0].name
+        })
     })
-})
+ })
+ 
  
 })
 
