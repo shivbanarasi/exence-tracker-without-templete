@@ -10,30 +10,6 @@ route.get('/',(req,res)=>{
     })
 })
 
-// route.get("/login/:user",(req,res)=>{
-//     const id=req.params.user;
-//     db.query(`SELECT * FROM expence where user="${id}"` ,(err,result)=>{
-//         let tot=0;
-//         for(let i of result){
-//            tot+= i.amount;
-//         }
-//         res.render('home',{
-//             title:'expence',
-//             res:result,
-//             total:tot
-//         })
-//      })
-//   // res.send('this is home page');
-// })
-
-// const userdetail=(id)=>{
-//     db.query(`SELECT * FROM user where id="${id}"` ,(err,result)=>{    
-//     //const t=result.tracker;
-//     console.log('res='+result);
-//     return result;
-   
-// }) 
-// };
 
 const total=(id)=>{
     db.query(`select * from user where id="${id}"`,(err,result)=>{
@@ -68,12 +44,8 @@ for(let i of out){
                     res:out
                 })
             })
-           }
-            
-           
-        })
-    
-    
+           }           
+        })   
 })
 
 route.get('/signup',(req,res)=>{
@@ -198,8 +170,6 @@ route.post('/signup',(req,res)=>{
 })
 
 
-
-
 route.post("/addexp",(req,res)=>{
     
     const discription=req.body.discription
@@ -231,6 +201,37 @@ route.post("/addexp",(req,res)=>{
  })
  
  
+})
+route.get('/forgetpass',(req,res)=>{
+    res.render('forgetpass',{
+        title:'forget password',
+        massage:""
+
+    })
+})
+
+route.post('/forgetpass',(req,res)=>{
+    const email=req.body.email;
+    const password=req.body.password;
+    const conpass=req.body.conpass;
+    if(password===conpass){
+        bcrypt.hash(password,10,(err,password)=>{
+            db.query(`update user 
+            set password='${password}' 
+            where email="${email}"`,(err,result)=>{
+        if(err){
+            console.log(err)
+        }       
+    } )
+    res.redirect(`/login`)
+    console.log('password change')
+})    
+}else{
+ res.render('forgetpass',{
+        title:'forget pass',
+        massage:'password does not match'
+    })
+}
 })
 
                    
