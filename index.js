@@ -4,6 +4,8 @@ const bodyparser=require('body-parser');
 const app=express();
 const { json } = require('express');
 const routesignup=require('./route/signup')
+const payment=require('./route/payment');
+const premiumuser=require('./route/premium')
 const port=4000;
 
 app.use(bodyparser.json());
@@ -14,6 +16,10 @@ app.set("view engine","ejs");
 
 
 app.use(routesignup);
+
+app.use(payment);
+
+//app.use(premiumuser)
 
 
 

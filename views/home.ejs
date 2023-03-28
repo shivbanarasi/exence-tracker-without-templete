@@ -109,9 +109,110 @@ h1{
           </tr>
     </table>
 </div>
+
+<%if(payment=="success") {%>
+<h2 style="text-align: center; margin-bottom: 30px;">
+    
+    <a style="text-decoration: none; border: black solid; background-color: #9958;border-radius: 10px; padding: 5px; " href="/login/<%=data%>/lead ">show leaderboard</a>
+</h2>
+<%}%>
+
+
+
+<%if(show=='lead') {%>
+
+    <div class="exp">
+        <h2 style="text-align: center; background-color: #0009; color: white; border: black solid ; padding: 5px;">LEADERBOARD</h2>
+    </div>
+<div class="exp">
+    <table>
+        <tr>
+            <th style="text-align: center;">NAME</th>
+            <th style="text-align: center;">TOTAL EXPENCE</th> 
+          </tr>
+
+          <% for(let p of lead) {%>
+            <tr> 
+            <td style="text-align: center;"><%=p.name%></td>
+            <td style="text-align: center;"><%=p.total%></td>
+            </tr>
+            <%}%>
+    </table>
+</div>
+<%}%>
+
 <h2 style="text-align: center; margin-bottom: 30px;">
     <a style="text-decoration: none; border: black solid; background-color: #9958;border-radius: 10px; padding: 5px; " href="/login ">logout</a>
+    
 </h2>
 
+
 </body>
+<script src="https://ajax.googleapis.com/ajax/lib/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script>
+              var orderId ;
+$(document).ready(function(){
+    var settings = {
+  "url": "/payment",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    "amount": "1000"
+  }),
+};
+
+//creates new orderId everytime
+$.ajax(settings).done(function (response) {
+
+  orderId=response.orderId;
+  console.log(orderId);
+  $("button").show();
+});
+});
+
+document.getElementById('rzp-button1').onclick = function(e){
+  var options = {
+    "key": "rzp_test_DTp0dOzJ3YQj2L", // Enter the Key ID generated from the Dashboard
+    "amount": "1000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+        var settings = {
+          "url": "/api/payment/verify",
+          "method": "POST",
+          "timeout": 0,
+          "headers": {
+             "Content-Type": "application/json"
+       },
+       "data": JSON.stringify({response}),
+}
+    },
+}
+rzp1.open();
+    e.preventDefault();
+}
+$.ajax(settings).done(function (response) {
+  alert(JSON.stringify(response));
+
+})
+var rzp1 = new Razorpay(options);
+
+const lead=document.getElementById('leaderboard');
+lead.addEventListener("click",async()=>{
+    const data =await fetch('https://localhost:4000/login')
+    .then(resp=>{console.log(resp)})
+    .catch(err=>{
+        console.log(err)
+    })
+})
+   
+    
+</script>
 </html>
