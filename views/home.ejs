@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <title><%=title%></title>
+    <title>hello <%=nam%></title>
     <style>
         body{
             background-color: aqua;
@@ -60,6 +60,19 @@ h1{
 <body>
 <%-include('./navbar.ejs')%>
 
+<%if(payment!="success") {%>
+
+<h2 style="text-align: center; margin-bottom: 30px;">
+    
+    <a style="text-decoration: none; border: black solid; background-color: #9958;border-radius: 10px; padding: 5px; " href="/login/<%=data%>/payment">buy premium membership</a>
+</h2>
+<%}%>
+<%if(payment=='success') {%>
+
+    <div class="exp">
+        <h2 style="text-align: center; background-color: #0009; color: white; border: black solid ; padding: 5px;">PREMIUM MEMBER</h2>
+    </div>
+    <%}%>
 
 <div class="exp">
     <h1>add your expence here</h1>
@@ -110,7 +123,7 @@ h1{
     </table>
 </div>
 
-<%if(payment=="success") {%>
+<%if(premium=="success") {%>
 <h2 style="text-align: center; margin-bottom: 30px;">
     
     <a style="text-decoration: none; border: black solid; background-color: #9958;border-radius: 10px; padding: 5px; " href="/login/<%=data%>/lead ">show leaderboard</a>
@@ -132,6 +145,7 @@ h1{
           </tr>
 
           <% for(let p of lead) {%>
+            <%%>
             <tr> 
             <td style="text-align: center;"><%=p.name%></td>
             <td style="text-align: center;"><%=p.total%></td>
@@ -148,71 +162,5 @@ h1{
 
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/lib/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-            <script>
-              var orderId ;
-$(document).ready(function(){
-    var settings = {
-  "url": "/payment",
-  "method": "POST",
-  "timeout": 0,
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "data": JSON.stringify({
-    "amount": "1000"
-  }),
-};
 
-//creates new orderId everytime
-$.ajax(settings).done(function (response) {
-
-  orderId=response.orderId;
-  console.log(orderId);
-  $("button").show();
-});
-});
-
-document.getElementById('rzp-button1').onclick = function(e){
-  var options = {
-    "key": "rzp_test_DTp0dOzJ3YQj2L", // Enter the Key ID generated from the Dashboard
-    "amount": "1000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-    "currency": "INR",
-    "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "handler": function (response){
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature)
-        var settings = {
-          "url": "/api/payment/verify",
-          "method": "POST",
-          "timeout": 0,
-          "headers": {
-             "Content-Type": "application/json"
-       },
-       "data": JSON.stringify({response}),
-}
-    },
-}
-rzp1.open();
-    e.preventDefault();
-}
-$.ajax(settings).done(function (response) {
-  alert(JSON.stringify(response));
-
-})
-var rzp1 = new Razorpay(options);
-
-const lead=document.getElementById('leaderboard');
-lead.addEventListener("click",async()=>{
-    const data =await fetch('https://localhost:4000/login')
-    .then(resp=>{console.log(resp)})
-    .catch(err=>{
-        console.log(err)
-    })
-})
-   
-    
-</script>
 </html>
