@@ -18,11 +18,6 @@ route.get('/forgetpass',(req,res)=>{
 route.post('/forgetpass',(req,res,next)=>{
     const id=uuidv4();
     const email=req.body.email
-    const client=Sib.ApiClient.instance
-    const apiKey=client.authentications['api-key']
-    apiKey.apiKey=process.env.API_KEY
-    const transEmailApi=new Sib.TransactionalEmailsApi()
-
     db.query(`insert into forgetpass(id,userid,isactive) 
     values('${id}','${email}',"no")`,(err,result)=>{
         if(err){
@@ -30,6 +25,12 @@ route.post('/forgetpass',(req,res,next)=>{
         }       
     } )
 
+    const client=Sib.ApiClient.instance
+    const apiKey=client.authentications['api-key']
+    apiKey.apiKey=process.env.API_KEY
+    const transEmailApi=new Sib.TransactionalEmailsApi()
+
+    
     const sender={
         email:'shivbanarasi0542@gmail.com',
     }
@@ -48,6 +49,7 @@ route.post('/forgetpass',(req,res,next)=>{
     })
     .then(console.log)
     .catch(console.log)
+    res.redirect('/login')
    
    
     
