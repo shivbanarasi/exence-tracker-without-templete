@@ -106,41 +106,9 @@ route.post("/addexp",(req,res)=>{
    
     res.redirect(`/login/${user}`)
         
- })
- 
- 
-})
-route.get('/forgetpass',(req,res)=>{
-    res.render('forgetpass',{
-        title:'forget password',
-        massage:""
-
-    })
+ }) 
 })
 
-route.post('/forgetpass',(req,res)=>{
-    const email=req.body.email;
-    const password=req.body.password;
-    const conpass=req.body.conpass;
-    if(password===conpass){
-        bcrypt.hash(password,10,(err,password)=>{
-            db.query(`update user 
-            set password='${password}' 
-            where email="${email}"`,(err,result)=>{
-        if(err){
-            console.log(err)
-        }       
-    } )
-    res.redirect(`/login`)
-    console.log('password change')
-})    
-}else{
- res.render('forgetpass',{
-        title:'forget pass',
-        massage:'password does not match'
-    })
-}
-})
 
 route.get('/api/userdata',(req,res)=>{
     db.query('select * from user',(err,result)=>{

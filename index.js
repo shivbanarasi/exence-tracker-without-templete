@@ -7,6 +7,7 @@ const routesignup=require('./route/signup')
 const payment=require('./route/payment');
 const premiumuser=require('./route/premium')
 const login=require('./route/login')
+const forgetpass=require('./route/forgetpass')
 const port=4000;
 
 app.use(cors());
@@ -24,6 +25,8 @@ app.use(payment);
 app.use(premiumuser);
 
 app.use(login);
+
+app.use(forgetpass);
 
 
 
