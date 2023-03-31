@@ -8,6 +8,7 @@ const payment=require('./route/payment');
 const premiumuser=require('./route/premium')
 const login=require('./route/login')
 const forgetpass=require('./route/forgetpass')
+const report=require('./route/daytoday')
 const port=4000;
 
 app.use(cors());
@@ -27,6 +28,8 @@ app.use(premiumuser);
 app.use(login);
 
 app.use(forgetpass);
+
+app.use(report)
 
 
 

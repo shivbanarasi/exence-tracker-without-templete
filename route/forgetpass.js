@@ -1,10 +1,11 @@
 const express=require('express');
 const bcrypt=require('bcrypt');
 const route=express.Router();
-const { v4: uuidv4 } = require('uuid');
-const db=require('../mysql/connn')
 const Sib=require('sib-api-v3-sdk')
 require('dotenv').config()
+const { v4: uuidv4 } = require('uuid');
+const db=require('../mysql/connn')
+
 
 route.get('/forgetpass',(req,res)=>{
    
@@ -19,7 +20,7 @@ route.post('/forgetpass',(req,res,next)=>{
     const id=uuidv4();
     const email=req.body.email
     db.query(`insert into forgetpass(id,userid,isactive) 
-    values('${id}','${email}',"no")`,(err,result)=>{
+    values('${id}','${email}',"false")`,(err,result)=>{
         if(err){
             console.log(err)
         }       
@@ -58,28 +59,26 @@ route.post('/forgetpass',(req,res,next)=>{
 route.get('/forgetpass/:id',(req,res)=>{
    const id=req.params.id
    db.query(`update forgetpass
-   set isactive='yes' 
-   where id="${email}"`,(err,result)=>{
+   set isactive='true' 
+   where id="${id}"`,(err,result)=>{
 if(err){
    console.log(err)
 }      
 } )
-db.query(`select email from forgetpass where id=${id}`,(err,res)=>{
+   console.log(id);
+db.query(`select userid from forgetpass where id=${id}`,(err,result)=>{
+   console.log(result)
+   
+})
     res.render('conform',{
         title:"reset password",
         massage:" ",
-        email:res[0]
+        email:id
     })
 })
-    // res.render('conform',{
-    //     title:"reset password",
-    //     massage:" ",
-    //     email:email
-    // })
-})
 
-route.post('/resetpass/:email',(req,res)=>{
-    const email=req.params.email;
+route.post('/resetpass/:id',(req,res)=>{
+    const id=req.params.id;
     const password=req.body.password;
     const conpass=req.body.conpass;
     if(password===conpass){

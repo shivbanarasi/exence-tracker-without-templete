@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>hello <%=title%></title>
+    <style>
+        body{
+            background-color: aqua;
+            background-image: url("https://thumbs.dreamstime.com/b/business-expenditure-abstract-stationery-money-desk-43268364.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid wheat;
+  text-align: left;
+  padding: 8px;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #0009;
+  color: white;
+}
+.exp{
+    background-color:#9539;
+    width:70%;
+    margin: 100px 300px 100px 200px;
+}
+.exp form input{
+    padding:1% 70% 1% 0;
+    margin:20px 5px 20px 25px;
+}
+select{
+    padding:1% 64.5% 1% 0;
+    margin:20px 5px 20px 25px;
+}
+button{
+    margin: 2% 20% 2% 35%;
+    padding: 1% 10% 1% 10%;
+}
+h1{
+    text-align: center;
+    color: white;
+    background-color:#0009;
+    margin: 10% 5% 2% 5%;
+    padding: 1% 10% 1% 10%; 
+    
+}
+    </style>
+</head>
+<body>
+<%-include('./navbar.ejs')%>
+
+
+
+
+
+
+    <div class="exp">
+        <h2 style="text-align: center; background-color: #0009; color: white; border: black solid ; padding: 5px;">DAY TO DAY EXPENCES</h2>
+    </div>
+   
+
+
+<div class="exp">
+    <h2 style="text-align: center; background-color: #0009; color: white; border: black solid ; padding: 5px;"> your daily expences</h2>
+</div>
+<div class="exp">
+    <h1>    view your expences   </h1>
+    <table>
+        <tr>
+            <th style="text-align: center;">Date</th>
+            <th style="text-align: center;">Discription</th>
+            <th style="text-align: center;">Category</th>
+            <th style="text-align: center;">expence</th>
+            
+          </tr>
+        
+          <tr>
+            <td style="text-align: center;"></td>
+            <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          <td style="text-align: center;"></td>
+          
+          </tr>
+     
+          <tr>
+            <th style="text-align: center;" border="1px solid black">total</th>
+            <td style="text-align: center;"></td>
+            <th style="text-align: center;"></th>
+          </tr>
+    </table>
+</div>
+
+
+<h2 style="text-align: center; margin-bottom: 30px;">
+    <a style="text-decoration: none; border: black solid; background-color: #9958;border-radius: 10px; padding: 5px; " href="/login ">logout</a>
+    
+</h2>
+
+
+</body>
+
+</html>
