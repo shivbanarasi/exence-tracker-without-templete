@@ -94,9 +94,12 @@ route.post("/addexp",(req,res)=>{
     const category=req.body.category
     const amount=req.body.amount
     const user=req.body.email
+    const date=req.body.date;
+    const month=req.body.month;
+    const year=req.body.year;
     console.log(discription,category,amount)
- db.query(`insert into expence(discription,category,amount,user) 
- values('${discription}','${category}',${amount},'${user}')`,(err,result)=>{
+ db.query(`insert into expence(discription,category,amount,user,day,month,year) 
+ values('${discription}','${category}',${amount},'${user}',${date},'${month}',${year})`,(err,result)=>{
      if(err){
          console.log(err)
      }       

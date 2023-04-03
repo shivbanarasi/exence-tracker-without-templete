@@ -12,11 +12,13 @@ route.get('/login/:email',(req,res)=>{
         let tot=0;
         let name1='';
         let payment='';
+        let date='';
         for(let i of naam){
             if(i.email===email){
                 name1=i.name;
                 payment=i.payment;
                 console.log(name1)
+                
             }
         }
 for(let i of out){
@@ -39,7 +41,8 @@ console.log(err)
             premium:payment,
             lead:naam,
             res:out,
-            nam:naam[0].name
+            nam:naam[0].name,
+            
         })
     })
 })
